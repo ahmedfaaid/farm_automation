@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  node-red:
+    image: nodered/node-red:latest
+    networks:
+      - node-red-net
+    ports:
+      - 1880:1880
+    volumes:
+      - node-red-data:/data
+
+  MQTTbroker:
+    image: eclipse-mosquitto:latest
+    networks:
+      - node-red-net
+    ports:
+      - 1883:1883
+
+  InfluxDB:
+    image: influxdb:latest
+    networks:
+      - node-red-net
+    ports:
+      - 8086:8086
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+
+volumes:
+  node-red-data:
+  influxdb-data:
+
+networks:
+  node-red-net:
